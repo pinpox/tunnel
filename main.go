@@ -43,7 +43,7 @@ func getEnv(key, defaultValue string) string {
 }
 
 func getWgName() string {
-	name := getEnv("TUNNEL_WG_INTERFACE_NAME", hostname)
+	name := getEnv("TUNNEL_WG_INTERFACE_NAME", "tunnel")
 	if len(name) > 15 {
 		log.Fatalf("Wireguard interface name %q is too long (>15 chars). Override by setting TUNNEL_WG_INTERFACE_NAME", name)
 	}
