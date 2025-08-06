@@ -28,7 +28,7 @@ import (
 const slugAlphabet = "123456789abcdefghijkmnopqrstuvwxyz"
 
 var (
-	hostname      = getEnv("TUNNEL_HOSTNAME", "tunnel.0cx.de")
+	hostname      = getEnv("TUNNEL_HOSTNAME", "tunnelmonster.com")
 	caddyHostname = getEnv("TUNNEL_CADDY_HOSTNAME", "localhost")
 	wgName        = getWgName()
 	wgNetwork     = getWgNetwork()
@@ -415,6 +415,8 @@ func updateReverseProxy(serverHostname, caddyHostname string, client *Client) er
 	if resp.StatusCode != http.StatusOK {
 		return fmt.Errorf("failed to update reverse proxy: %s", resp.Status)
 	}
+
+	log.Println("Caddy configuration updated successfully!")
 
 	return nil
 }
