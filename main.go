@@ -136,7 +136,7 @@ func (c *Client) Config(serverHostname string, serverIP net.IP, serverWgPort int
 	tmpl := `[Interface]
 Address = {{.IP}}/32
 PrivateKey = {{.PrivateKey}}
-PostUp = printf 'You can now access http://0.0.0.0:{{.Port}} on https://{{.Slug}}.{{.Hostname}}/'
+PostUp = iptables -I INPUT -i %i -m tcp -p tcp --dport {{.Port}} -j ACCEPT; printf 'You can now access http://0.0.0.0:{{.Port}} on https://{{.Slug}}.{{.Hostname}}/'
 
 [Peer]
 PublicKey = {{.ServerPublicKey}}
