@@ -15,6 +15,7 @@ in
     enable = mkEnableOption "tunnel service";
 
     package = mkOption {
+      default = (pkgs.callPackage ./default.nix { });
       type = types.package;
       description = "The tunnel package to use";
     };
@@ -112,7 +113,7 @@ in
         TUNNEL_WG_PORT = toString cfg.wireguardPort;
         TUNNEL_STATIC_PATH = "${cfg.package}/share/tunnel/static";
       };
-      
+
       path = with pkgs; [
         iproute2
         wireguard-tools

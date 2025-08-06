@@ -10,7 +10,6 @@
         console.keyMap = "colemak";
         services.tunnel = {
           enable = true;
-          package = pkgs.callPackage ./default.nix { };
           hostname = "server";
           caddyHostname = "localhost";
           listenPort = 8080;
