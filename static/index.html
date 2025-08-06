@@ -1,0 +1,147 @@
+<head>
+<style>
+  :root {
+    font-family: monospace;
+    font-size: 20px;
+    text-align: center;
+    color: lightgray;
+  }
+
+  body {
+    background-color: midnightblue;
+    margin: 0;
+    padding: 20px;
+  }
+
+  header {
+    font-size: 70px;
+    color: gold;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+  }
+
+  a {
+    color: orange;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: darkorange;
+    text-decoration: underline;
+  }
+
+  .section-spacing {
+    margin-top: 50px;
+    margin-bottom: 5px;
+    color: lightsteelblue;
+  }
+
+  .comment {
+    font-size: 18px;
+    color: mediumslateblue;
+    margin-top: 10px;
+    font-style: italic;
+  }
+
+  .code-block {
+    background-color: black;
+    border: 2px solid steelblue;
+    border-radius: 10px;
+    text-align: left;
+    display: inline-block;
+    margin: 10px 0;
+  }
+
+  .code-content {
+    padding: 15px;
+    display: block;
+    color: lightgreen;
+  }
+
+  .port-annotation {
+    color: yellow;
+    margin-left: 328px;
+    margin-top: 5px;
+    font-size: 14px;
+  }
+
+  .output-text {
+    color: lightblue;
+    font-style: italic;
+  }
+
+  .stop-section {
+    margin-top: 30px;
+    color: lightsteelblue;
+  }
+
+  .footer-link {
+    margin-top: 30px;
+    color: orange;
+    text-decoration: none;
+  }
+
+  .footer-link:hover {
+    color: darkorange;
+    text-decoration: underline;
+  }
+
+  p {
+    color: lightgray;
+    line-height: 1.4;
+  }
+</style>
+</head>
+
+<body>
+  <header>
+    {{.Hostname}}
+  </header>
+  <p>
+	SSL-terminated HTTP tunnels to your local machine.
+  </p>
+  <p>
+	No custom software required, thanks to <a class="link-purple"
+	href="https://www.wireguard.com/install/">Wireguard</a>
+  </p>
+  <p class="section-spacing">
+    To start a tunnel for your local service
+  </p>
+  <p class="comment">
+   # Remember to bind your local service to 0.0.0.0
+  </p>
+  <div class="code-block">
+    <div class="code-content">
+      $ curl https://{{.Hostname}}/8080 > tunnel.conf && wg-quick up
+      ./tunnel.conf
+      <br>
+      <div class="port-annotation">^ port of the service you want to tunnel</div>
+
+      <br>
+      <div class="output-text">&gt; You can now access http://0.0.0.0:8080 on https://&lt;unique_slug&gt;.{{.Hostname}}/</div>
+    </div>
+  </div>
+  <br />
+  <p class="stop-section">
+    To stop your tunnel
+  </p>
+  <div class="code-block">
+    <div class="code-content">
+      $ wg-quick down ./tunnel.conf
+    </div>
+  </div>
+  <br>
+  <br>
+  <a class="footer-link"
+    href="https://github.com/pinpox/tunnel">https://github.com/pinpox/tunnel</a>
+</body>
+<script>
+const checkTunnelConnection = () => {
+  console.log("running stuff")
+  fetch("http://{{.ServerIP}}:1234").then(r => console.log(r)).catch(e => console.log(e))
+  setTimeout(checkTunnelConnection, 5000)
+}
+
+checkTunnelConnection()
+</script>

@@ -1,0 +1,15 @@
+[Unit]
+Description=tunnel - Tunneling made easy feat. WireGuard
+After=network.target auditd.service
+
+[Service]
+Environment=TUNNEL_WG_PORT=55555
+Environment=TUNNEL_HOSTNAME=tunnel.example.com
+Environment=TUNNEL_WG_INTERFACE_NAME=tunnel 
+WorkingDirectory=/root/tunnel
+ExecStart=/usr/local/bin/tunnel
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
